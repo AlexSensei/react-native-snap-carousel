@@ -67,7 +67,8 @@ export default class Carousel extends Component {
         useScrollView: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
         vertical: PropTypes.bool,
         onBeforeSnapToItem: PropTypes.func,
-        onSnapToItem: PropTypes.func
+        onSnapToItem: PropTypes.func,
+        leftStartPadding: PropTypes.number
     };
 
     static defaultProps = {
@@ -99,7 +100,8 @@ export default class Carousel extends Component {
         shouldOptimizeUpdates: true,
         swipeThreshold: 20,
         useScrollView: !AnimatedFlatList,
-        vertical: false
+        vertical: false,
+        leftStartPadding: 0
     }
 
     constructor (props) {
@@ -520,11 +522,11 @@ export default class Carousel extends Component {
     }
 
     _getContainerInnerMargin (opposite = false) {
-        const { sliderWidth, sliderHeight, itemWidth, itemHeight, vertical, activeSlideAlignment } = this.props;
+        const { sliderWidth, sliderHeight, itemWidth, itemHeight, vertical, activeSlideAlignment, leftStartPadding } = this.props;
 
         if ((activeSlideAlignment === 'start' && !opposite) ||
             (activeSlideAlignment === 'end' && opposite)) {
-            return 0;
+            return leftStartPadding;
         } else if ((activeSlideAlignment === 'end' && !opposite) ||
             (activeSlideAlignment === 'start' && opposite)) {
             return vertical ? sliderHeight - itemHeight : sliderWidth - itemWidth;
